@@ -5,6 +5,6 @@
   become: yes
 
   roles:
-    - role: "wrapper_angular"
-    - role: "deploy_backend"
-#    - role: "deploy_database"  
+#    - role: "wrapper_angular"
+#    - role: "deploy_backend"
+    - role: "deploy_database"  

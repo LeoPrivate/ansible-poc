@@ -1,0 +1,15 @@
+---
+
+- name: Install json server
+  npm: name=json-server global=yes
+
+- name: Move files
+  shell: cp -r nodejs-database {{databaseDirectory}}
+  args:
+    chdir: "{{gitDirectory}}"
+
+
+- name: run json server
+  shell: json-server --watch db.json --port 5432 &
+  args:
+    chdir: "{{databaseDirectory}}"
