@@ -2,7 +2,7 @@
 
 - name: debug
   debug:
-    msg: mon index {{my_idx}}
+    msg: mon index {{loop_index}}
 
 - name: Install dependencies
   apt:
@@ -21,7 +21,7 @@
 - name: Install angular cli package
   npm: name=@angular/cli global=yes
 
-- name: upgrade Node
+- name: upgrade Node to v12
   shell: n 12
 
 - name: Create frontend directory
@@ -52,10 +52,7 @@
   args:
     chdir: "{{frontendDirectory}}/angular-frontend"
 
-- name: Move configuration nginx
-  shell: mv {{frontendDirectory}}/nginx/* /etc/nginx/conf.d/
-
-- name: restart nginx
-  service:
-    name: nginx
-    state: restarted
+- name: build webserver
+  include_role:
+    name: deploy_web_server
+  

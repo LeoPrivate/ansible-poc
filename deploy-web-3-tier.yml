@@ -3,21 +3,17 @@
   hosts: "all"
   become: yes
 
+  tasks:  
+    - name: Loop over webserver
+      include_role:
+        name: build_angular_app
+      vars:
+        loop_index: "{{item}}"
+      with_sequence: count={{nb_instance}}
+ 
   roles:
 #    - role: "setup_ubuntu1804"
 #    - role: "install_dependencies"
- #   - role: "run_angular_app"
+#   - role: "run_angular_app"
 #    - role: "deploy_backend"
-#    - role: "deploy_database"
-
-  tasks:
-    - name: Loop over webserver
-      include_role:
-        name: run_angular_app
-      vars:
-        id: "{{item}}"
-      loop:
-        - hello world
-        - hi
-      loop_control:
-        index_var: my_idx
+#    - role: "deploy_database"  

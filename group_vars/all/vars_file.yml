@@ -3,3 +3,8 @@ port:
   backend: 3000
   database: 5432
 
+nb_instance: 2
+
+frontendDirectory: /var/www/frontend
+backendDirectory: /var/www/backend
+databaseDirectory: /??
