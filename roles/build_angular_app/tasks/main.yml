@@ -33,15 +33,10 @@
     dest: "{{gitDirectory}}"
     update: yes
     force: yes
-
-- name: Run NPM install
-  npm: path={{gitDirectory}}/angular-frontend
-
-- name: Build production file
-  shell: ng build --prod
-  args:
-    chdir: "{{gitDirectory}}/angular-frontend"
-
+  notify: 
+    - npm install frontend
+    - build production folder
+ 
 - name: Create frontend html folder
   file:
     path: /var/www/html/frontend

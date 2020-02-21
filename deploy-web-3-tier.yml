@@ -7,5 +7,4 @@
   roles:
     - role: "wrapper_angular"
     - role: "deploy_backend"
-#    - role: "deploy_backend"
 #    - role: "deploy_database"  

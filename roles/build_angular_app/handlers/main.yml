@@ -1,0 +1,8 @@
+---
+  - name: npm install frontend
+    npm: path={{gitDirectory}}/angular-frontend
+  
+  - name: build production folder
+    shell: ng build --prod
+    args:
+     chdir: "{{gitDirectory}}/angular-frontend"
