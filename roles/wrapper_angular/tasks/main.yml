@@ -1,0 +1,7 @@
+---
+- name: Loop to instanciate nb_instance web server
+  include_role:
+    name: build_angular_app
+  vars:
+    loop_index: "{{item}}"
+  with_sequence: count={{nb_instance}}

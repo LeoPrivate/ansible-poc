@@ -1,0 +1,23 @@
+---
+
+- name: Create backend directory
+  file: path={{backendDirectory}} state=directory
+
+- name: Move files
+  shell: cp -r nodejs-backend {{backendDirectory}}
+  args:
+    chdir: "{{gitDirectory}}"
+
+- name: Run NPM install
+  npm: path={{backendDirectory}}/nodejs-backend
+
+- name: stop all pm2 process
+  shell: pm2 stop all
+  register: e1
+  ignore_errors: true
+
+- name:
+  shell: pm2 start server.js 
+  args:
+    chdir: "{{backendDirectory}}/nodejs-backend"
+  

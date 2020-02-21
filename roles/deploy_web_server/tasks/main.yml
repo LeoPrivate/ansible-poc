@@ -5,10 +5,10 @@
     msg: mon index {{loop_index}}
 
 - name: Move configuration nginx
-  shell: cp {{frontendDirectory}}/nginx/todo.conf /etc/nginx/conf.d/todo{{loop_index}}.conf
+  shell: cp {{gitDirectory}}/nginx/todo.conf /etc/nginx/conf.d/todo{{loop_index}}.conf
 
 - name: Move configuration nginx
-  shell: cp {{frontendDirectory}}/nginx/load-balancer.conf /etc/nginx/conf.d/load-balancer.conf
+  shell: cp {{gitDirectory}}/nginx/load-balancer.conf /etc/nginx/conf.d/load-balancer.conf
 
 - name: Change port number
   lineinfile:
@@ -16,11 +16,11 @@
     regexp: listen [0-9][0-9] default_server;
     line: listen 8{{loop_index}} default_server;
 
-- name: add to load_balancer
-  lineinfile:
-    path: /etc/nginx/conf.d/load-balancer.conf
-    regexp: upstream todoapp {
-    line: "upstream todoapp {\nserver localhost:8{{loop_index}};"
+    lineinfile:
+      path: /etc/nginx/conf.d/load-balancer.conf
+      regexp: "#server localhost:PORT"
+      line: "\tserver localhost:{{loop_index}};\n\t#server localhost:PORT;"
+      firstmatch: yes
 
 
 - name: restart nginx

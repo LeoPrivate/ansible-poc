@@ -1,19 +1,11 @@
 ---
-- name: Configure website
+
+- name: Run Todo app 3-tier architecture
   hosts: "all"
   become: yes
 
-  tasks:  
-    - name: Loop over webserver
-      include_role:
-        name: build_angular_app
-      vars:
-        loop_index: "{{item}}"
-      with_sequence: count={{nb_instance}}
- 
   roles:
-#    - role: "setup_ubuntu1804"
-#    - role: "install_dependencies"
-#   - role: "run_angular_app"
+    - role: "wrapper_angular"
+    - role: "deploy_backend"
 #    - role: "deploy_backend"
 #    - role: "deploy_database"  

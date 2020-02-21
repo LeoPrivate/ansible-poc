@@ -5,6 +5,7 @@ port:
 
 nb_instance: 2
 
+gitDirectory: /project
 frontendDirectory: /var/www/frontend
 backendDirectory: /var/www/backend
 databaseDirectory: /??
