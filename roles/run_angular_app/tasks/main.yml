@@ -1,0 +1,61 @@
+---
+
+- name: debug
+  debug:
+    msg: mon index {{my_idx}}
+
+- name: Install dependencies
+  apt:
+    name:
+      - nodejs
+      - git
+      - npm
+      - nginx
+      - curl
+    update_cache: yes 
+    state: latest
+
+- name: Install n package
+  npm: name=n global=yes 
+
+- name: Install angular cli package
+  npm: name=@angular/cli global=yes
+
+- name: upgrade Node
+  shell: n 12
+
+- name: Create frontend directory
+  file: path={{frontendDirectory}} state=directory
+
+- name: Git clone repo
+  git:
+    repo: "https://github.com/LeoPrivate/angular-todo-poc.git"
+    dest: "{{frontendDirectory}}"
+    update: yes
+    force: yes
+
+- name: Run NPM install
+  npm: path={{frontendDirectory}}/angular-frontend
+
+- name: Build production file
+  shell: ng build --prod
+  args:
+    chdir: "{{frontendDirectory}}/angular-frontend"
+
+- name: Create frontend html file
+  file:
+    path: /var/www/html/frontend
+    state: directory
+
+- name: Move production files
+  shell: cp -r dist /var/www/html/frontend
+  args:
+    chdir: "{{frontendDirectory}}/angular-frontend"
+
+- name: Move configuration nginx
+  shell: mv {{frontendDirectory}}/nginx/* /etc/nginx/conf.d/
+
+- name: restart nginx
+  service:
+    name: nginx
+    state: restarted

@@ -1,0 +1,5 @@
+port:
+  web: 4200
+  backend: 3000
+  database: 5432
+

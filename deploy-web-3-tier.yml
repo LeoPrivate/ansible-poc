@@ -1,0 +1,23 @@
+---
+- name: Configure website
+  hosts: "all"
+  become: yes
+
+  roles:
+#    - role: "setup_ubuntu1804"
+#    - role: "install_dependencies"
+ #   - role: "run_angular_app"
+#    - role: "deploy_backend"
+#    - role: "deploy_database"
+
+  tasks:
+    - name: Loop over webserver
+      include_role:
+        name: run_angular_app
+      vars:
+        id: "{{item}}"
+      loop:
+        - hello world
+        - hi
+      loop_control:
+        index_var: my_idx
