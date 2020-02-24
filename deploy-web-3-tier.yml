@@ -5,6 +5,23 @@
   become: yes
 
   roles:
-    - role: "wrapper_angular"
+  #  - role: "setup_ubuntu1804"
+
+    - role: "build_angular_app"
+
+    - role: "wrapper_web_server"
+      when: force.reboot or force.webserver or gitHasChanged.changed
+    
     - role: "deploy_backend"
-    - role: "deploy_database"  
+      when: force.reboot or force.backend or gitHasChanged.changed
+    
+    - role: "deploy_database"
+      when: force.reboot or force.database or gitHasChanged.changed
+
+
+ # tasks:
+ # - name: Change port number of loadbalancer conf
+ #   lineinfile:
+ #     path: /etc/nginx/conf.d/load-balancer.conf
+ #     regexp: "#server localhost:PORT"
+ #     line: "\tserver localhost:83;\n\t#server localhost:PORT;"

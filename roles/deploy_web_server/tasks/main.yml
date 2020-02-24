@@ -2,27 +2,26 @@
 
 - name: Print index
   debug:
-    msg: mon index {{loop_index}}
+    msg: Id of webserver is {{loop_index}}
 
 - name: Move configuration nginx
-  shell: cp {{gitDirectory}}/nginx/todo.conf /etc/nginx/conf.d/todo{{loop_index}}.conf
+  copy:
+    src:  "{{gitDirectory}}/nginx/todo.conf"
+    dest: /etc/nginx/conf.d/todo{{loop_index}}.conf
+    remote_src: yes
 
-- name: Change port number
+- name: Change port number of webserver conf
   lineinfile:
     path: /etc/nginx/conf.d/todo{{loop_index}}.conf
     regexp: listen 8[0-9] default_server;
     line: listen 8{{loop_index}} default_server;
     firstmatch: yes
 
-- name: Move configuration nginx
-  shell: cp {{gitDirectory}}/nginx/load-balancer.conf /etc/nginx/conf.d/load-balancer.conf
-
-- name: Change port number
+- name: Change port number of loadbalancer conf
   lineinfile:
     path: /etc/nginx/conf.d/load-balancer.conf
     regexp: "#server localhost:PORT"
     line: "\tserver localhost:8{{loop_index}};\n\t#server localhost:PORT;"
-    firstmatch: yes
 
 - name: restart nginx
   service:

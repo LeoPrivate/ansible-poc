@@ -1,9 +1,5 @@
 ---
 
-- name: debug
-  debug:
-    msg: ID of instance is {{loop_index}}
-
 - name: Install dependencies
   apt:
     name:
@@ -14,6 +10,7 @@
       - curl
     update_cache: yes 
     state: latest
+  ignore_errors: yes
 
 - name: Install n package
   npm: name=n global=yes 
@@ -33,13 +30,7 @@
     dest: "{{gitDirectory}}"
     update: yes
     force: yes
-  notify: 
-    - "setup frontend"
-    - "notify webserver role"
+  notify: "setup frontend"
+  register: gitHasChanged
 
-- name: build webserver
-  include_role:
-    name: deploy_web_server
-  when: gitRepositoryHasChanged 
-
-  
+- meta: flush_handlers

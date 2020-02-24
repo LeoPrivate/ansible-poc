@@ -1,0 +1,14 @@
+---
+
+- name: Move configuration nginx
+  copy:
+    src:  "{{gitDirectory}}/nginx/load-balancer.conf"
+    dest: /etc/nginx/conf.d/load-balancer.conf
+    remote_src: yes
+
+- name: Loop to instanciate nb_instance web server
+  include_role:
+    name: deploy_web_server
+  vars:
+    loop_index: "{{item}}"
+  with_sequence: count={{nb_instance}}

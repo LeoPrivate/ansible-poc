@@ -1,11 +1,26 @@
+# Port variables
 port:
   web: 4200
   backend: 3000
   database: 5432
 
-nb_instance: 3
 
+# Directory variables 
 gitDirectory: /project
 frontendDirectory: /var/www/frontend
 backendDirectory: /var/www/backend
 databaseDirectory: /var/www/database
+
+# Use force.<frontend/backend/webserver/database/reboot>
+# to force reaload even if git has not changed
+# reboot is to reboot all
+force:
+  frontend: false
+  backend: false
+  webserver: false
+  database: false
+  reboot: true
+
+
+# Number of instance you want to deploy
+nb_instance: 2

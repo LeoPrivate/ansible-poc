@@ -5,16 +5,21 @@
 
 
 - name: Move files
-  shell: cp -r nodejs-backend {{backendDirectory}}
-  args:
-    chdir: "{{gitDirectory}}"
+  copy:
+    src:  "{{gitDirectory}}/nodejs-backend"
+    dest: "{{backendDirectory}}"
+    remote_src: yes
+
+
 
 - name: Run NPM install
   npm: path={{backendDirectory}}/nodejs-backend
 
+- name: Install angular cli package
+  npm: name=pm2 global=yes
+
 - name: stop all pm2 process
   shell: pm2 stop all
-  register: e1
   ignore_errors: true
 
 - name:
