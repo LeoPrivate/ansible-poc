@@ -1,8 +1,27 @@
 ---
   - name: npm install frontend
     npm: path={{gitDirectory}}/angular-frontend
+    listen: "setup frontend"
   
   - name: build production folder
     shell: ng build --prod
     args:
      chdir: "{{gitDirectory}}/angular-frontend"
+    listen: "setup frontend"
+
+  - name: Move production files
+    shell: cp -r dist /var/www/html/frontend
+    args:
+      chdir: "{{gitDirectory}}/angular-frontend"
+    listen: "setup frontend"
+
+  - name: Create frontend html folder
+    file:
+      path: /var/www/html/frontend
+      state: directory
+    listen: "setup frontend"
+
+  - name: notify webserver role
+    set_fact:
+      gitRepositoryHasChanged: true
+      

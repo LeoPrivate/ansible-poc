@@ -2,7 +2,7 @@
 
 - name: debug
   debug:
-    msg: mon index {{loop_index}}
+    msg: ID of instance is {{loop_index}}
 
 - name: Install dependencies
   apt:
@@ -34,20 +34,12 @@
     update: yes
     force: yes
   notify: 
-    - npm install frontend
-    - build production folder
- 
-- name: Create frontend html folder
-  file:
-    path: /var/www/html/frontend
-    state: directory
-
-- name: Move production files
-  shell: cp -r dist /var/www/html/frontend
-  args:
-    chdir: "{{gitDirectory}}/angular-frontend"
+    - "setup frontend"
+    - "notify webserver role"
 
 - name: build webserver
   include_role:
     name: deploy_web_server
+  when: gitRepositoryHasChanged 
+
   

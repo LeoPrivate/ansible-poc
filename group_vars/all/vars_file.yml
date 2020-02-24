@@ -3,7 +3,7 @@ port:
   backend: 3000
   database: 5432
 
-nb_instance: 2
+nb_instance: 3
 
 gitDirectory: /project
 frontendDirectory: /var/www/frontend
