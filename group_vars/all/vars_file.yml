@@ -19,7 +19,7 @@ force:
   backend: false
   webserver: false
   database: false
-  reboot: true
+  reboot: false
 
 
 # Number of instance you want to deploy
