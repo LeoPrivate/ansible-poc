@@ -16,6 +16,6 @@
 
 
 - name: run json server
-  shell: json-server --watch db.json --port 5432 &
+  shell: json-server --port 5432 db.json 2>&1 </dev/null &
   args:
-    chdir: "{{databaseDirectory}}"
+    chdir: "{{databaseDirectory}}/nodejs-database"

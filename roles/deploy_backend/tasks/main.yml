@@ -10,8 +10,6 @@
     dest: "{{backendDirectory}}"
     remote_src: yes
 
-
-
 - name: Run NPM install
   npm: path={{backendDirectory}}/nodejs-backend
 
