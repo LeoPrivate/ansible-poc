@@ -21,7 +21,7 @@ It will deploy a TODOLIST app using :
 
 * Use the official documentation [Ansible installation](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) to install ansible
 * Clone the project
-* generate an ssh key and put it in ~/.ssh/ansible-remote.pub , you can rename it if you want but you will have to change the vars_files.yml
+* generate an ssh key and put it in ~/.ssh/ansible-remote.pub on the control node, you can rename it if you want but you will have to change the vars_files.yml by yourself !
 
 ```bash
 ssh-keygen -t rsa 
@@ -31,7 +31,7 @@ ssh-keygen -t rsa
 
 ## Usage
 
-Create first an inventory with one virtual machine, or machine or instance and write it IP adress or domain in  
+Create first an inventory with one virtual machine, or machine or instance in which you can AT LEAST connect via password (or ssh) and write its IP adress or domain in  
 /etc/ansible/hosts  
 ```yaml
 [web]
@@ -41,7 +41,7 @@ Create first an inventory with one virtual machine, or machine or instance and w
 
 You can now run the playbook at the root of the project using:
 
-* If it is the first time you run it you will have to add -K -k arguments to give the ssh and sudo password 
+* If it is the first time you run it (and you only have password ssh access, not key) you will have to add -K -k arguments to give the ssh and sudo password 
 ```bash
 ansible-playbook deploy-web-3-tier.yml --private-key ~/.ssh/ansible-remote -k -K
 ```
@@ -61,9 +61,9 @@ force:
   database: false | true  
   reboot: false | true  
 
-You can change the traditional behavior of my script by editing this variables to force a reboot. Why would you do that ? because I implement somes handlers and for example if there is no change in the git directory, almost nothing will happen (because I tried to make my script idempotent) 
+You can change the traditional behavior of my script by editing this variables to force a reboot. Why would you do that ? because I implement somes handlers and for example if there is no change in the git directory, almost nothing will happen the second time you launch the script (because I tried to make my script idempotent) 
 
 ## troubleshooting
 
-* You should probably be loggeded as "ubuntu" user in the machine where you execute the ansible playbook (you can change this behavior by editing setup_ubuntu1804 folder)
-* I have not try on other operating system than ubuntu server 18.04 (for the machine you want to configure AND for the main machine)
+* You should probably be loggeded as "ubuntu" user in the control node machine (where you execute the ansible playbook) => you can change this behavior by editing setup_ubuntu1804 folder and change variables name
+* I have not try on other operating system than ubuntu server 18.04 (for the machine you want to configure AND for the main machine), at your risk if you want to try another operating system
