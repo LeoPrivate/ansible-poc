@@ -3,11 +3,6 @@
 - name: Install json server
   npm: name=json-server global=yes
 
-#- name: Move files
-#  shell: cp -r nodejs-database {{databaseDirectory}}
-#  args:
-#    chdir: "{{gitDirectory}}"
-
 - name: Move files
   copy:
     src:  "{{gitDirectory}}/nodejs-database"
